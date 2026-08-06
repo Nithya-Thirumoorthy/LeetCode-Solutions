@@ -1,0 +1,39 @@
+double findMedianSortedArrays(int* nums1, int nums1Size, int* nums2, int nums2Size) {
+    int m=nums1Size;
+    int n=nums2Size;
+    int fsize=m+n;
+    int i=0, j=0; 
+    int* merged=calloc(fsize+1,sizeof(int));
+    
+    for(i=0;i<m;i++)
+    {
+        merged[i]=nums1[i];
+    }
+    for(j=0;j<n;j++)
+    {
+        merged[m+j]=nums2[j];
+    }
+    for(int k=0;k<fsize;k++)
+    {
+        for(int l=0;l<fsize;l++)
+        {
+            if(merged[k]<merged[l]) 
+            {
+                int temp=merged[k];
+                merged[k]=merged[l];
+                merged[l]=temp;
+            }
+        }
+    }
+    double median = 0.0; 
+    if(fsize%2==0)
+    {
+        median=(merged[(fsize/2)-1]+merged[fsize/2])/2.0; 
+    }
+    else
+    {
+        median=merged[fsize/2];
+    }
+    free(merged);
+    return median;
+}
