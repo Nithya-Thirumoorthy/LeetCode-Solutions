@@ -16,4 +16,3 @@ int addDigits(int num) {
     }
     return num;
 }
-Create README.md
