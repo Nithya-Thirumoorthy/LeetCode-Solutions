@@ -1,0 +1,25 @@
+class Solution {
+    public List<Integer> targetIndices(int[] nums, int target) {
+        Arrays.sort(nums);
+        String op="";
+        int size=nums.length;
+        for(int i=0;i<size;i++)
+        {
+            if(nums[i]==target)
+            {
+                op+=i;
+                op+=",";
+            }
+        }
+        List<Integer> result=new ArrayList<>();
+        if(!op.isEmpty())
+        {
+            String[] parts=op.split(",");
+            for(String part:parts)
+            {
+                result.add(Integer.parseInt(part));
+            }
+        }
+        return result;
+    }
+}
