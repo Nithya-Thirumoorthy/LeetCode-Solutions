@@ -1,0 +1,63 @@
+/**
+ * Your DinnerPlates object will be instantiated and called as such:
+ * DinnerPlates obj = new DinnerPlates(capacity);
+ * obj.push(val);
+ * int param_2 = obj.pop();
+ * int param_3 = obj.popAtStack(index);
+ */
+import java.util.*;
+class DinnerPlates {
+    private final int capacity;
+    private final List<Stack<Integer>> stacks;
+    private final TreeSet<Integer> availableStacks; 
+
+    public DinnerPlates(int capacity) {
+        this.capacity = capacity;
+        this.stacks = new ArrayList<>();
+        this.availableStacks = new TreeSet<>();
+    }
+    
+    public void push(int val) {
+        if (availableStacks.isEmpty()) {
+            Stack<Integer> newStack = new Stack<>();
+            newStack.push(val);
+            stacks.add(newStack);
+            
+            if (newStack.size() < capacity) {
+                availableStacks.add(stacks.size() - 1);
+            }
+        } else {
+            int firstAvailableIndex = availableStacks.first();
+            Stack<Integer> stack = stacks.get(firstAvailableIndex);
+            stack.push(val);
+            
+            if (stack.size() == capacity) {
+                availableStacks.remove(firstAvailableIndex);
+            }
+        }
+    }
+    
+    public int pop() {
+        return popAtStack(stacks.size() - 1);
+    }
+    
+    public int popAtStack(int index) {
+        if (index < 0 || index >= stacks.size() || stacks.get(index).isEmpty()) {
+            return -1;
+        }
+        
+        Stack<Integer> stack = stacks.get(index);
+        int val = stack.pop();
+        
+        availableStacks.add(index);
+        
+        while (!stacks.isEmpty() && stacks.get(stacks.size() - 1).isEmpty()) {
+            int lastIndex = stacks.size() - 1;
+            stacks.remove(lastIndex);
+            availableStacks.remove(lastIndex);
+        }
+        
+        return val;
+    }
+}
+
