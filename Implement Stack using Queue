@@ -1,0 +1,36 @@
+class MyStack {
+    Stack<Integer> s;
+
+    public MyStack() {
+        s=new Stack<>();
+        
+    }
+    
+    public void push(int x) {
+        s.push(x);
+        
+    }
+    
+    public int pop() {
+        return s.pop();
+        
+    }
+    
+    public int top() {
+        return s.peek();
+        
+    }
+    
+    public boolean empty() {
+        if(s.isEmpty())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+        
+    }
+}
+
