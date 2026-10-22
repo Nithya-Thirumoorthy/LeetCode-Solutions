@@ -1,0 +1,58 @@
+class Solution {
+    public int sortableIntegers(int[] nums) {
+        int n = nums.length;
+        int totalSum = 0;
+        
+        for (int k = 1; k <= n; k++) {
+            if (n % k == 0) {
+                if (isSortableWithK(nums, n, k)) {
+                    totalSum = totalSum + k;
+                }
+            }
+        }
+        
+        return totalSum;
+    }
+    
+    private boolean isSortableWithK(int[] nums, int n, int k) {
+        int lastMax = -1;
+        
+        for (int start = 0; start < n; start = start + k) {
+            int currentMin = nums[start];
+            for (int i = start; i < start + k; i++) {
+                if (nums[i] < currentMin) {
+                    currentMin = nums[i];
+                }
+            }
+            if (lastMax != -1 && currentMin < lastMax) {
+                return false;
+            }
+            
+            int drops = 0;
+            for (int i = start; i < start + k - 1; i++) {
+                if (nums[i] > nums[i + 1]) {
+                    drops++;
+                }
+            }
+            if (nums[start + k - 1] > nums[start]) {
+                if (drops > 0) {
+                    drops++;
+                }
+            }
+            
+            if (drops > 1) {
+                return false;
+            }
+            
+            int currentMax = nums[start];
+            for (int i = start; i < start + k; i++) {
+                if (nums[i] > currentMax) {
+                    currentMax = nums[i];
+                }
+            }
+            lastMax = currentMax;
+        }
+        
+        return true;
+    }
+}
