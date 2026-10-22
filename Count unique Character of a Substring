@@ -1,0 +1,32 @@
+class Solution {
+    public int uniqueLetterString(String s) 
+    {
+        int n = s.length();
+        long totalSum = 0;
+        int[] lastPosition = new int[26];
+        int[] prevPosition = new int[26];
+        Arrays.fill(lastPosition, -1);
+        Arrays.fill(prevPosition, -1);
+
+        for (int i = 0; i < n; i++) {
+            int charIndex = s.charAt(i) - 'A';
+            if (lastPosition[charIndex] != -1) {
+                int curr = lastPosition[charIndex];
+                int prev = prevPosition[charIndex];
+                int next = i;
+                totalSum += (long) (curr - prev) * (next - curr);
+            }
+            prevPosition[charIndex] = lastPosition[charIndex];
+            lastPosition[charIndex] = i;
+        }
+        for (int i = 0; i < 26; i++) {
+            if (lastPosition[i] != -1) {
+                int curr = lastPosition[i];
+                int prev = prevPosition[i];
+                int next = n;
+                totalSum += (long) (curr - prev) * (next - curr);
+            }
+        }
+        return (int) totalSum;
+    }
+}
